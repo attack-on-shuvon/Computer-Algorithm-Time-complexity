@@ -1,0 +1,51 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+struct product{   //ekta structure banalam jekane 3 ta variable raksi
+    int profit;
+    int weight;
+    double u_profit;  //mane hosse proti ekok ojone profit koro  unit profit = (profit/weight)
+};
+
+bool cmp(product a,product b){  // ei bool cmp function ta sorting er kaj ta korbe unit profit er basis e
+    return a.u_profit>b.u_profit;
+
+}
+double  fractional_knapsack(product prod[], int n, int w){
+
+    sort(prod,prod+n,cmp);   // structure sorting
+    double profit = 0;  //protome dorsi profit 0 ase
+    for(int i=0;i<n;i++){
+        if(w>=prod[i].weight){  //amr je bag ase ba knapsack er size w kali ase kina,,kali hole if statement e dukbe
+            w-=prod[i].weight;  //faka takle weight kombe
+            profit+=prod[i].profit; // oi object e taka profit add hobe
+        }
+        else{  // jodi knapsack er size faka na take taile fraction nibo
+            profit+= (double(w)/prod[i].weight)*prod[i].profit;
+            break;
+        }
+    }
+    return profit;
+
+  }
+
+int main(){
+    int n=7;
+    int W = 15;
+
+    int p[]={10,5,15,7,6,18,3};  //eta profit er array
+
+    int w[]={2,3,5,7,1,4,1}; // eta weight er array
+
+    struct product prod[n];       //structure type er array banaisi prod[n] namok, ekane p and w array teke value acces nibo
+
+    for(int i=0;i<n;i++){
+            prod[i].profit = p[i];
+            prod[i].weight = w[i];
+            prod[i].u_profit = double(p[i]) / w[i];
+    }
+    double ans = fractional_knapsack(prod, n, W);
+
+    cout<<ans<<endl;
+
+}
