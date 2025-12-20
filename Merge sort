@@ -1,0 +1,62 @@
+#include<bits/stdc++.h>
+using namespace std;
+int num[]={7,1,5,10,3,11};
+int c[6]={};
+
+void merging(int L, int Mid, int H){
+    int i=L , j=Mid+1, k=L;
+    while(i<=Mid && j<=H){
+    if(num[i]<num[j]){
+        c[k]=num[i];
+        k++;
+        i++;
+    }
+    else{
+        c[k]=num[j];
+        k++;
+        j++;
+    }
+}
+
+
+    for( ; i<=Mid;i++) {
+            c[k]=num[i];
+             k++;
+    }
+      for( ; j<=H;j++) {
+            c[k]=num[j] ;
+            k++;
+      }
+
+
+
+
+       for(int i=L;i<k;i++){
+        num[i]=c[i];
+       }
+
+
+}
+
+
+void mergesort(int L,int H){
+    if(L<H){
+            int Mid = (L+H)/2;
+        mergesort(L,Mid);
+        mergesort(Mid+1,H);
+        merging(L,Mid,H);
+    }
+
+}
+
+
+
+int main(){
+    int n=6;
+    mergesort(0,5);
+    for(int i=0;i<n;i++){
+        cout<<num[i]<<" ";
+    }
+
+
+}
