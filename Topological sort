@@ -1,0 +1,84 @@
+#include<bits/stdc++.h>
+using namespace std;
+vector<int>adj_list[1000];
+int indeg[1000];
+set<int>se;
+queue<int>q;
+vector<int>top_list;
+
+void topsort(){
+    while(!q.empty()){
+        int top = q.front();
+        q.pop(); //jar indeg 0 sei age asbe ba marks korsi
+        top_list.push_back(top);
+
+        for(int i=0;i<adj_list[top].size();i++){
+            int v = adj_list[top][i]; //child mark hoye gelo
+
+            if(indeg[v]>0) {
+                    indeg[v]--;  // eta na dileo somossa nai,,,,0 er seye boro hoilei to tokon indegree kombe so 0 teke boroi hobe
+            }
+
+            if(indeg[v]==0){
+                q.push(v);
+            }
+        }
+    }
+
+}
+
+int main(){
+    int n,e;
+    cin>>n>>e;
+    char  u,v;
+    int uu,vv;
+    for(int i=1;i<=e;i++){
+            cin>>u>>v;
+            uu =u-'A'+1;
+            vv=v-'A'+1;
+
+            indeg[vv]++;   // indegree count kortesi
+
+       adj_list[uu].push_back(vv); // directed er jonno ekta leklei hobe cz eta directed graph
+       se.insert(uu);
+       se.insert(vv);
+       // set rtmodde ase (1,2,3,4,5,6,7,8) here it =1 mean kortese first e
+       //
+    }
+
+    for(auto &it : se){
+
+     // kar indeg 0 ,seta ber korte
+    if(indeg[it]==0){
+        q.push(it);
+        break; // indeg 0 ekta pailei break ,,1 er indeg 0 so 1 kei queue te raktesi
+    }
+    }
+topsort();
+
+for(int i=0;i<top_list.size();i++){
+    cout<<char(top_list[i]+'A'-1)<<" ";
+    }
+
+}
+
+
+/*
+A : C
+B : C
+B : D
+
+1: 3
+2 : 3
+2 : 4 2 er list e 4 ebabe
+
+
+
+
+'A'-'A' =0;
+'A'-'A'+1= 1
+
+u kunta r v kunta ,,mane u----->v;
+doro ekta edge A---->C then A(u)----->C(v);
+indegree bartese kar ofc (v) er so ,indeg[v]++;
+*/
