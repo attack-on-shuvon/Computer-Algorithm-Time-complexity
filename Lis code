@@ -1,0 +1,30 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int arr[]={3,4,-1,0,6,2,3};
+    int n = 7;
+    int lis[n];
+    for(int i=0;i<n;i++){
+        lis[i]=1;     //prottek index k 1 dore fellam
+    }
+    //int lis[]={1,1,1,1,1,1,1};
+
+
+    for(int i=0;i<n;i++){
+        for(int j=0;j<i;j++){
+            if(arr[i]>arr[j]){
+                lis[i]=max(lis[j]+1,lis[i]);
+            }
+        }
+    }
+
+    int ans =0;   //ekane ans 0 mane prottek bar je ans 0 emon na ,,
+    for(int i=0;i<n;i++){
+        ans = max(ans,lis[i]);  // doro first e ans 0 so max(0,1)=1,,,now ans 0 teke update hoye 1 hoye jabe ebabe 
+    }
+
+    cout<<ans<<endl;
+
+
+}
