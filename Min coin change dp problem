@@ -1,0 +1,48 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+
+    int n,amount;
+    cin>>n;
+    int coin[n];
+    for(int i=0;i<n;i++){
+        cin>>coin[i];
+    }
+
+    cout<<"enter amount"<<endl;
+    cin>>amount;
+   /* int coin[] ={1,5,7,9};
+    int amount =12;
+    int n =4;*/
+    int solution[n+1][amount+1];
+
+
+    for(int i=0;i<n;i++){  // coin ase amount nai
+        solution[i][0]=0;
+    }
+
+    for(int j=1;j<amount;j++){
+        solution[0][j]=INT_MAX -1 ; // coin nai but amount ase ,kunu coin chara amount bananu pray ososmbob,tai infinity hobe
+    }
+
+
+
+    //dp code ekan teke suru i+1 nite hobe karon jokon i=0 tokon i-1=-1 hoye jabe jeta invalid,tai i+1 nite hobe
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=amount;j++){
+            if(coin[i-1]>j){
+                solution[i][j]= solution[i-1][j];
+            }
+            else{
+                solution[i][j] = min(solution[i-1][j],1+solution[i][j-coin[i-1]]);
+            }
+        }
+    }
+
+    cout<<solution[n][amount]<<endl;
+
+
+
+
+}
